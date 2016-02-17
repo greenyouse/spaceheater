@@ -4,7 +4,7 @@
   https://github.com/bitwiseshiftleft/sjcl, and
   http://www.tarsnap.com/scrypt/scrypt.pdf"
   (:require [goog.crypt :as gc]
-            [goog.crypt.pbkdf2Sha256 :as p])
+            [spaceheater.pbkdf2Sha256 :as p])
   (:require-macros [spaceheater.macros :as m :refer [forloop]]))
 
 ;; alaiasing some heavily used functions with long names here

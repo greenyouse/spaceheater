@@ -32,14 +32,14 @@
                                         :main "spaceheater.core"
                                         :parallel-build true
                                         :source-map true
-                                        :libs ["src/js/pbkdf2Sha256.js"]}}
+                                        :libs ["src/js"]}}
                        :advanced {:source-paths ["src"]
                                   :compiler {:output-to "resources/public/js/spaceheater.js"
                                              :optimizations :advanced
                                              :parallel-build true
                                              :main "spaceheater.core"
                                              :source-map "resources/public/js/adv.js.map"
-                                             :libs ["src/js/pbkdf2Sha256.js"]}}
+                                             :libs ["src/js"]}}
                        :test {:source-paths ["src" "test"]
                               :notify-command ["phantomjs"
                                                "phantom/unit-test.js"
@@ -51,7 +51,7 @@
                                          :main "spaceheater.core"
                                          :pretty-print true
                                          :parallel-build true
-                                         :libs ["src/js/pbkdf2Sha256.js"]}}}
+                                         :libs ["src/js"]}}}
               :test-commands {"unit-test" ["phantomjs"
                                            "phantom/unit-test.js"
                                            "phantom/unit-test.html"]}})
