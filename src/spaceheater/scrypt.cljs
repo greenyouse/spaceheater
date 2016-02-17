@@ -176,15 +176,15 @@
   p -- CPU parallelization parameter
   dkLen -- Intended output length of derived key, in octets"
   [passwd salt N r p dkLen]
-  (assert (>= (* r p) (js/Math.pow 2 30))
-    (format "The parameters r and p must satisfy r * p < 2^30;
-     current value: %s" (* r p)))
-  (assert (or (< N 2) (not= 0 (b& N (dec N))))
+  (assert (<= (* r p) (js/Math.pow 2 30))
+    (str "The parameters r and p must satisfy r * p < 2^30;
+     current value: " (* r p)))
+  (assert (or (> N 2) (= 0 (b& N (dec N))))
     "Ther parameter N must be a power of 2.")
   (let [max (dec (js/Math.pow 2 32))]
-    (assert (> N (/ max (/ 128 r)))
+    (assert (<= N (/ max (/ 128 r)))
       "N too big")
-    (assert (> r (/ map (/ 128 p)))
+    (assert (<= r (/ max (/ 128 p)))
       "r too big"))
   (let [B (p/deriveKeySha256 passwd salt 1 (* p 128 r 8))
         V (make-array 16)
