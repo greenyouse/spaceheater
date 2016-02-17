@@ -23,7 +23,8 @@ goog.require('goog.userAgent');
 function testPBKDF2() {
     // PBKDF2 test vectors from:
     // http://tools.ietf.org/html/rfc6070
-    // sha2 test vectors from (lol):
+    // sha2 test vectors from:
+    // https://tools.ietf.org/html/draft-josefsson-scrypt-kdf-04#section-8
     // http://stackoverflow.com/questions/5130513/pbkdf2-hmac-sha2-test-vectors
     // TODO: finish building the test runner for this too
 
@@ -68,6 +69,11 @@ function testPBKDF2() {
     testSalt = goog.crypt.stringToByteArray('salt');
 
     assertElementsEquals(
+        goog.crypt.hexToByteArray('55ac046e56e3089fec1691c22544b605f94185216dde0465e68b9d57c20dacbc49ca9cccf179b645991664b39d77ef317c71b845b1e30bd509112041d3a19783'),
+        goog.crypt.pbkdf2.deriveKeySha256(testPassword, testSalt, 1, 64));
+
+
+    assertElementsEquals(
         goog.crypt.hexToByteArray('120fb6cffcf8b32c43e7225256c4f837a86548c9'),
         goog.crypt.pbkdf2.deriveKeySha256(testPassword, testSalt, 1, 20));
 
@@ -104,5 +110,11 @@ function testPBKDF2() {
         goog.crypt.hexToByteArray('89b69d0516f829893c696226650a8687'),
         goog.crypt.pbkdf2.deriveKeySha256(testPassword, testSalt, 4096, 16));
 
+    testPassword = goog.crypt.stringToByteArray('Password');
+    testSalt = goog.crypt.stringToByteArray('NaCl');
+
+    assertElementsEquals(
+        goog.crypt.hexToByteArray('4ddcd8f60b98be21830cee5ef22701f9641a4418d04c0414aeff08876b34ab56a1d425a1225833549adb841b51c9b3176a272bdebba1d078478f62b397f33cd'),
+        goog.crypt.pbkdf2.deriveKeySha256(testPassword,testSalt, 8000, 64));
 
 }
