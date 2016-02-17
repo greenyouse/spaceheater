@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-goog.provide('goog.crypt.pbkdf2Test');
-goog.setTestOnly('goog.crypt.pbkdf2Test');
+goog.provide('goog.crypt.pbkdf2Sha256Test');
+goog.setTestOnly('goog.crypt.pbkdf2Sha256Test');
 
 goog.require('goog.crypt');
 goog.require('goog.crypt.pbkdf2');
@@ -21,9 +21,7 @@ goog.require('goog.testing.jsunit');
 goog.require('goog.userAgent');
 
 function testPBKDF2() {
-    // PBKDF2 test vectors from:
-    // http://tools.ietf.org/html/rfc6070
-    // sha2 test vectors from:
+    // sha256 test vectors from:
     // https://tools.ietf.org/html/draft-josefsson-scrypt-kdf-04#section-8
     // http://stackoverflow.com/questions/5130513/pbkdf2-hmac-sha2-test-vectors
     // TODO: finish building the test runner for this too
@@ -31,39 +29,6 @@ function testPBKDF2() {
     if (goog.userAgent.IE && goog.userAgent.isVersionOrHigher('7')) {
         return;
     }
-
-    var testPassword = goog.crypt.stringToByteArray('password');
-    var testSalt = goog.crypt.stringToByteArray('salt');
-
-    assertElementsEquals(
-        goog.crypt.hexToByteArray('0c60c80f961f0e71f3a9b524af6012062fe037a6'),
-        goog.crypt.pbkdf2.deriveKeySha1(testPassword, testSalt, 1, 160));
-
-    assertElementsEquals(
-        goog.crypt.hexToByteArray('ea6c014dc72d6f8ccd1ed92ace1d41f0d8de8957'),
-        goog.crypt.pbkdf2.deriveKeySha1(testPassword, testSalt, 2, 160));
-
-    assertElementsEquals(
-        goog.crypt.hexToByteArray('4b007901b765489abead49d926f721d065a429c1'),
-        goog.crypt.pbkdf2.deriveKeySha1(testPassword, testSalt, 4096, 160));
-
-    testPassword = goog.crypt.stringToByteArray('passwordPASSWORDpassword');
-    testSalt =
-        goog.crypt.stringToByteArray('saltSALTsaltSALTsaltSALTsaltSALTsalt');
-
-    assertElementsEquals(
-        goog.crypt.hexToByteArray(
-            '3d2eec4fe41c849b80c8d83662c0e44a8b291a964cf2f07038'),
-        goog.crypt.pbkdf2.deriveKeySha1(testPassword, testSalt, 4096, 200));
-
-    testPassword = goog.crypt.stringToByteArray('pass\0word');
-    testSalt = goog.crypt.stringToByteArray('sa\0lt');
-
-    assertElementsEquals(
-        goog.crypt.hexToByteArray('56fa6aa75548099dcc37d7f03425e0c3'),
-        goog.crypt.pbkdf2.deriveKeySha1(testPassword, testSalt, 4096, 128));
-
-
     // SHA256
     testPassword = goog.crypt.stringToByteArray('password');
     testSalt = goog.crypt.stringToByteArray('salt');

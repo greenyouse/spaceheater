@@ -3,7 +3,8 @@
   https://tools.ietf.org/html/draft-josefsson-scrypt-kdf-04,
   https://github.com/bitwiseshiftleft/sjcl, and
   http://www.tarsnap.com/scrypt/scrypt.pdf"
-  (:require [goog.crypt.pbkdf2 :as p])
+  (:require [goog.crypt :as gc]
+            [goog.crypt.pbkdf2Sha256 :as p])
   (:require-macros [spaceheater.macros :as m :refer [forloop]]))
 
 ;; alaiasing some heavily used functions with long names here
@@ -186,9 +187,14 @@
       "N too big")
     (assert (<= r (/ max (/ 128 p)))
       "r too big"))
-  (let [B (p/deriveKeySha256 passwd salt 1 (* p 128 r 8))
+  (let [B (p/deriveKeySha256
+            (gc/stringToByteArray passwd)
+            (gc/stringToByteArray salt)
+            1 (* p 128 r 8))
         V (make-array 16)
         XY (make-array 16)]
     (forloop [(i 0) (< i p) (inc i)]
       (smix B (* i 128 r) r N V XY))
-    (p/deriveKeySha256 passwd B 1 (* dkLen 8))))
+    (p/deriveKeySha256
+      (gc/stringToByteArray passwd)
+      B 1 (* dkLen 8))))
