@@ -30,7 +30,7 @@ goog.require('goog.crypt.pbkdf2');
  * @param {number} keyLength Length of the output key in bits.
  * @return {!Array.<number>} Byte array representation of the output key.
  */
-goog.crypt.pbkdf2.deriveKeySha256 = function(
+spaceheater.pbkdf2Sha256.deriveKeySha256 = function(
     password, initialSalt, iterations, keyLength) {
   // Length of the HMAC-SHA256 output in bits.
   var HASH_LENGTH = 256;
